@@ -1,8 +1,12 @@
 package es.unican.ps.clases;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class DatosCliente {
+import jakarta.persistence.Embeddable;
+
+@Embeddable
+public class DatosCliente implements Serializable {
 	private String dni;
 	private String nombre;
 	private String primerApellido;

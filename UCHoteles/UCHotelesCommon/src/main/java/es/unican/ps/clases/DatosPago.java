@@ -1,10 +1,13 @@
 package es.unican.ps.clases;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import es.unican.ps.enums.TipoTarjeta;
+import jakarta.persistence.Embeddable;
 
-public class DatosPago {
+@Embeddable
+public class DatosPago implements Serializable {
 	private String numTarjeta;
 	private String cvc;
 	private int mesCaducidad;

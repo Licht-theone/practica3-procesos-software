@@ -1,12 +1,30 @@
 package es.unican.ps.clases;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class ReservaTipoHabitacion {
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+public class ReservaTipoHabitacion implements Serializable{
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	@ManyToOne
+	@JoinColumn(name = "reserva_id")
 	private Reserva reserva;
+	
 	private int numHabitaciones;
+	
+	@ManyToOne
+	@JoinColumn(name = "habitacion_id")
 	private Habitacion habitacion;
+	
 	public ReservaTipoHabitacion(long id, Reserva reserva, int numHabitaciones, Habitacion habitacion) {
 		super();
 		this.id = id;

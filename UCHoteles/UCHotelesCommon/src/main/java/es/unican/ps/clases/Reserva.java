@@ -1,27 +1,55 @@
 package es.unican.ps.clases;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Reserva {
+import jakarta.annotation.Generated;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+@Entity
+public class Reserva implements Serializable {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
 	private LocalDate fechaEntrada;
 	private LocalDate fechaSalida;
+	
+	@OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ReservaTipoHabitacion> lineasReserva = new ArrayList<ReservaTipoHabitacion>();
+	
+	@Embedded
+	private DatosCliente cliente;
+	
+	@Embedded
+	private DatosPago datosPago;
 	
 	public Reserva() {
 	}
 
-	public Reserva(long id, LocalDate fechaEntrada, LocalDate fechaSalida, List<ReservaTipoHabitacion> lineasReserva) {
+	
+	public Reserva(long id, LocalDate fechaEntrada, LocalDate fechaSalida, List<ReservaTipoHabitacion> lineasReserva,
+			DatosCliente cliente, DatosPago datosPago) {
 		super();
 		this.id = id;
 		this.fechaEntrada = fechaEntrada;
 		this.fechaSalida = fechaSalida;
 		this.lineasReserva = lineasReserva;
+		this.cliente = cliente;
+		this.datosPago = datosPago;
 	}
+
 
 	public long getId() {
 		return id;
@@ -55,6 +83,22 @@ public class Reserva {
 		this.lineasReserva = lineasReserva;
 	}
 	
+	public DatosCliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(DatosCliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public DatosPago getDatosPago() {
+		return datosPago;
+	}
+
+	public void setDatosPago(DatosPago datosPago) {
+		this.datosPago = datosPago;
+	}
+
 	public void addLineaReserva(ReservaTipoHabitacion r) {
 		if (lineasReserva != null) {
 			lineasReserva.add(r);
@@ -75,16 +119,19 @@ public class Reserva {
 		return total;
 	}
 
+
 	@Override
 	public String toString() {
 		return "Reserva [id=" + id + ", fechaEntrada=" + fechaEntrada + ", fechaSalida=" + fechaSalida
-				+ ", lineasReserva=" + lineasReserva + "]";
+				+ ", lineasReserva=" + lineasReserva + ", cliente=" + cliente + ", datosPago=" + datosPago + "]";
 	}
+
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(fechaEntrada, fechaSalida, Long.valueOf(id), lineasReserva);
+		return Objects.hash(cliente, datosPago, fechaEntrada, fechaSalida, Long.valueOf(id), lineasReserva);
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -95,8 +142,9 @@ public class Reserva {
 		if (getClass() != obj.getClass())
 			return false;
 		Reserva other = (Reserva) obj;
-		return Objects.equals(fechaEntrada, other.fechaEntrada) && Objects.equals(fechaSalida, other.fechaSalida)
+		return Objects.equals(cliente, other.cliente) && Objects.equals(datosPago, other.datosPago)
+				&& Objects.equals(fechaEntrada, other.fechaEntrada) && Objects.equals(fechaSalida, other.fechaSalida)
 				&& id == other.id && Objects.equals(lineasReserva, other.lineasReserva);
 	}
-	
+
 }
