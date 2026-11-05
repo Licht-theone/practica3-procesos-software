@@ -3,12 +3,14 @@ package es.unican.ps.clases;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+@Entity
 public class ReservaTipoHabitacion implements Serializable{
 	
 	@Id
