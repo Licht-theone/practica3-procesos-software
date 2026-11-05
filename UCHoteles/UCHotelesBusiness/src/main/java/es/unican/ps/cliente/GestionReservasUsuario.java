@@ -10,7 +10,9 @@ import es.unican.ps.clases.Hotel;
 import es.unican.ps.clases.Reserva;
 import es.unican.ps.enums.TipoHabitacion;
 import es.unican.ps.interfaces.IGestionReservasUsuario;
+import jakarta.ejb.Stateful;
 
+@Stateful
 public class GestionReservasUsuario implements IGestionReservasUsuario {
 
 	@Override

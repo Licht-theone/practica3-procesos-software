@@ -6,6 +6,10 @@ import java.util.Objects;
 import es.unican.ps.enums.TipoTarjeta;
 import jakarta.persistence.Embeddable;
 
+/**
+ * Clase que almacena los datos de pago de un cliente para una reserva
+ * @author aaron
+ */
 @Embeddable
 public class DatosPago implements Serializable {
 	private String numTarjeta;
@@ -14,6 +18,14 @@ public class DatosPago implements Serializable {
 	private int anhoCaducidad;
 	private TipoTarjeta tipo;
 	
+	/**
+	 * Constructor de la clase
+	 * @param numTarjeta numero de la tarjeta en formato texto
+	 * @param cvc cvc en formato texto
+	 * @param mesCaducidad mes como numero
+	 * @param anhoCaducidad año como numero
+	 * @param tipo tipo de tarjeta como en el Enum
+	 */
 	public DatosPago(String numTarjeta, String cvc, int mesCaducidad, int anhoCaducidad, TipoTarjeta tipo) {
 		super();
 		this.numTarjeta = numTarjeta;

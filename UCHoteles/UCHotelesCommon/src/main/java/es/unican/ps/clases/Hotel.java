@@ -31,8 +31,9 @@ public class Hotel implements Serializable {
 	@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Habitacion> habitaciones = new ArrayList<Habitacion>();
 	
-	
-	
+	/**
+	 * Constructor vacio para bbdd jpa
+	 */
 	public Hotel() {
 	}
 	

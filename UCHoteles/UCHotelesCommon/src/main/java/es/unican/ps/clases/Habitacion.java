@@ -11,6 +11,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+/**
+ * Clase que almacena los detalles de una habitacion de un hotel
+ * @author aaron
+ */
 @Entity
 public class Habitacion implements Serializable {
 	
@@ -26,9 +30,20 @@ public class Habitacion implements Serializable {
 	private TipoHabitacion tipo;
 	private double precioPorNoche;
 	
+	/**
+	 * Constructor sin parametros para bbdd jpa
+	 */
 	public Habitacion() {
 	}
 	
+	/**
+	 * Constructor con parametros
+	 * @param id id en bbdd
+	 * @param hotel hotel a la que esta asignada
+	 * @param disponibles cuantas hay dispnibles
+	 * @param tipo tipo de habitacion del enum
+	 * @param precioPorNoche precio por noche
+	 */
 	public Habitacion(long id, Hotel hotel, int disponibles, TipoHabitacion tipo, double precioPorNoche) {
 		super();
 		this.id = id;

@@ -10,6 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+/**
+ * Clase intermedia que almacena el numero de habitaciones por tipo de habitacion de una reserva
+ * @author aaron
+ */
 @Entity
 public class ReservaTipoHabitacion implements Serializable{
 	
@@ -27,6 +31,19 @@ public class ReservaTipoHabitacion implements Serializable{
 	@JoinColumn(name = "habitacion_id")
 	private Habitacion habitacion;
 	
+	/**
+	 * Constructor vacio por la bbdd jpa
+	 */
+	public ReservaTipoHabitacion() {
+	}
+	
+	/**
+	 * Constructor de la clase
+	 * @param id id en bbdd
+	 * @param reserva reserva asociada
+	 * @param numHabitaciones numero de habitaciones de este tipo
+	 * @param habitacion tipo de habitacion que se reserva
+	 */
 	public ReservaTipoHabitacion(long id, Reserva reserva, int numHabitaciones, Habitacion habitacion) {
 		super();
 		this.id = id;

@@ -16,6 +16,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
+/**
+ * Clase que almacena los detalles de una reserva
+ * @author aaron
+ */
 @Entity
 public class Reserva implements Serializable {
 	
@@ -35,10 +39,21 @@ public class Reserva implements Serializable {
 	@Embedded
 	private DatosPago datosPago;
 	
+	/**
+	 * Constructor vacio para bbdd jpa
+	 */
 	public Reserva() {
 	}
-
 	
+	/**
+	 * Constructor de la clase
+	 * @param id id en bbdd
+	 * @param fechaEntrada fecha de entrada
+	 * @param fechaSalida fecha de salida
+	 * @param lineasReserva que tipos de habitacion se han reservado y cuantos de cada
+	 * @param cliente datos del cliente
+	 * @param datosPago datos del pagos
+	 */
 	public Reserva(long id, LocalDate fechaEntrada, LocalDate fechaSalida, List<ReservaTipoHabitacion> lineasReserva,
 			DatosCliente cliente, DatosPago datosPago) {
 		super();
@@ -106,19 +121,23 @@ public class Reserva implements Serializable {
 		}
 	}
 
+	/**
+	 * Metodo que calcula el importe total de la reserva en base a noches, precio por noche de la habitacion
+	 * y el tipo de la habitacion
+	 * @return el precio total de la reserva
+	 */
 	public double getImporte() {
 		return calcularImporte();
 	}
 	
 	private double calcularImporte() {
 		double total = 0;
-		long noches = ChronoUnit.DAYS.between(fechaEntrada, fechaSalida) - 1;
+		long noches = ChronoUnit.DAYS.between(fechaEntrada, fechaSalida) - 1; //las noches son los dias - 1
 		for (ReservaTipoHabitacion res: lineasReserva) {
 			total += res.getNumHabitaciones() * (noches * res.getHabitacion().getPrecioPorNoche());
 		}
 		return total;
 	}
-
 
 	@Override
 	public String toString() {
@@ -126,12 +145,10 @@ public class Reserva implements Serializable {
 				+ ", lineasReserva=" + lineasReserva + ", cliente=" + cliente + ", datosPago=" + datosPago + "]";
 	}
 
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(cliente, datosPago, fechaEntrada, fechaSalida, Long.valueOf(id), lineasReserva);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {

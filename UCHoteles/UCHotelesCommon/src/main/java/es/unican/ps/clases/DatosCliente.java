@@ -5,6 +5,10 @@ import java.util.Objects;
 
 import jakarta.persistence.Embeddable;
 
+/**
+ * Clase que almacena los datos de un cliente para la reserva de un hotel
+ * @author aaron
+ */
 @Embeddable
 public class DatosCliente implements Serializable {
 	private String dni;
@@ -13,6 +17,14 @@ public class DatosCliente implements Serializable {
 	private String segundoApellido;
 	private String email;
 	
+	/**
+	 * Constructor de la clase
+	 * @param dni dni del cliente 
+	 * @param nombre nombre del cliente 
+	 * @param primerApellido primer apellido del cliente 
+	 * @param segundoApellido segundo apellido del cliente 
+	 * @param email email del cliente 
+	 */
 	public DatosCliente(String dni, String nombre, String primerApellido, String segundoApellido, String email) {
 		super();
 		this.dni = dni;
@@ -21,7 +33,7 @@ public class DatosCliente implements Serializable {
 		this.segundoApellido = segundoApellido;
 		this.email = email;
 	}
-
+	
 	public String getDni() {
 		return dni;
 	}
@@ -33,7 +45,7 @@ public class DatosCliente implements Serializable {
 	public String getNombre() {
 		return nombre;
 	}
-
+	
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
