@@ -45,4 +45,10 @@ public class HotelDAO implements IHotelDAO{
 		return null;
 	}
 
+	@Override
+	public Hotel verHotelId(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

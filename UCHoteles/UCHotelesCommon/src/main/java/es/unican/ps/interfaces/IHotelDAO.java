@@ -13,4 +13,5 @@ public interface IHotelDAO {
 	public Hotel borrarHotel(long id);
 	public Hotel modificarHotel(Hotel modificado);
 	public List<Hotel> listarHoteles();
+	public Hotel verHotelId(long id);
 }
