@@ -53,7 +53,7 @@ public class GestionReservasUsuario implements IGestionReservasUsuario {
 	@Override
 	public Reserva consultarReserva(long id, String dni) {
 		Reserva r = reservaDAO.verReserva(id);
-		if (r == null || !r.getCliente().getDni().equals(dni)) {
+		if (r == null || dni == null ||!r.getCliente().getDni().equals(dni)) {
 			return null;
 		}
 		return r;
@@ -152,6 +152,20 @@ public class GestionReservasUsuario implements IGestionReservasUsuario {
 		return reserva;
 	}
 
+	/**
+	 * Metodo auxiliar para mostrar el importe sin crear la reserva permanente
+	 * @return el importe actual antes de formalizar la reserva
+	 */
+	public double calcularImportePrevioAReserva() {
+		Reserva r = new Reserva();
+		r.setFechaEntrada(entrada);
+		r.setFechaSalida(salida);
+		for (ReservaTipoHabitacion linea: habitacionesBloqueadas) {
+			r.addLineaReserva(linea);
+		}
+		return r.getImporte();
+	}
+	
 	//Stateful
 	@Override
 	public boolean liberarHabitaciones(long idHotel, TipoHabitacion tipo, int cantidad) {
