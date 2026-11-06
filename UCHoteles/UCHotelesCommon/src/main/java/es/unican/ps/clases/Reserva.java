@@ -181,6 +181,4 @@ public class Reserva implements Serializable {
 				&& Objects.equals(lineasReserva, other.lineasReserva);
 	}
 
-	
-
 }

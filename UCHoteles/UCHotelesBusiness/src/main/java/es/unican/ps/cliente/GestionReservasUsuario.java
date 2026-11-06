@@ -66,7 +66,7 @@ public class GestionReservasUsuario implements IGestionReservasUsuario {
 		if (r == null) {
 			return null;
 		}
-		long diasParaEntrada = ChronoUnit.DAYS.between(LocalDate.now(), entrada);
+		long diasParaEntrada = ChronoUnit.DAYS.between(LocalDate.now(), r.getFechaEntrada());
 		if (diasParaEntrada >= 2) {
 			return reservaDAO.borrarReserva(id);
 		}
