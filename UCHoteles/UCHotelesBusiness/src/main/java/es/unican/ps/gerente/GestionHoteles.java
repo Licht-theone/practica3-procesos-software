@@ -37,11 +37,7 @@ public class GestionHoteles implements IGestionHoteles {
 	@Override
 	public boolean modificarHabitaciones(Hotel hotel) {
 		Hotel res = hotelDAO.modificarHotel(hotel);
-		if (res.equals(hotel)) {
-			return true;
-		} else {
-			return false;
-		}
+		return res != null;
 	}
 
 	@Override
