@@ -35,7 +35,7 @@ public interface IGestionReservasUsuario {
 	 * Metodo que permite conocer los detalles de una reserva de un cliente
 	 * @param id el id de la reserva
 	 * @param dni el dni del cliente
-	 * @return el objeto reserva o null si no existe
+	 * @return el objeto reserva o null si no existe o el dni no coincide
 	 */
 	public Reserva consultarReserva(long id, String dni);
 	
@@ -43,7 +43,7 @@ public interface IGestionReservasUsuario {
 	 * Metodo que permite anular una reserva
 	 * @param id el id de la reserva a anular
 	 * @param dni el dni del cliente
-	 * @return el objeto reserva que se ha eliminado o null si no existe
+	 * @return el objeto reserva que se ha eliminado o null si no existe o el dni no coincide
 	 */
 	public Reserva cancelarReserva(long id, String dni);
 	
@@ -52,7 +52,7 @@ public interface IGestionReservasUsuario {
 	 * @param idHotel el id del hotel
 	 * @param fechaEntrada la fecha de entrada
 	 * @param fechaSalida la fecha de salida
-	 * @return la lista de habitaciones disponibles
+	 * @return la lista de habitaciones disponibles (vacia si no existe el hotel o no hay disponibilidad)
 	 */
 	public List<Habitacion> consultarDisponibilidad(long idHotel, LocalDate fechaEntrada, LocalDate fechaSalida);
 	

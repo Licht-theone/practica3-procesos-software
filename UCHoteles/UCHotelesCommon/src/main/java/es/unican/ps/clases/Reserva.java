@@ -7,13 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 /**
@@ -39,6 +40,10 @@ public class Reserva implements Serializable {
 	@Embedded
 	private DatosPago datosPago;
 	
+	@ManyToOne
+	@JoinColumn(name = "hotel_id")
+	private Hotel hotel;
+	
 	/**
 	 * Constructor vacio para bbdd jpa
 	 */
@@ -53,9 +58,10 @@ public class Reserva implements Serializable {
 	 * @param lineasReserva que tipos de habitacion se han reservado y cuantos de cada
 	 * @param cliente datos del cliente
 	 * @param datosPago datos del pagos
+	 * @param hotel el hotel de la reserva
 	 */
 	public Reserva(long id, LocalDate fechaEntrada, LocalDate fechaSalida, List<ReservaTipoHabitacion> lineasReserva,
-			DatosCliente cliente, DatosPago datosPago) {
+			DatosCliente cliente, DatosPago datosPago, Hotel hotel) {
 		super();
 		this.id = id;
 		this.fechaEntrada = fechaEntrada;
@@ -63,8 +69,17 @@ public class Reserva implements Serializable {
 		this.lineasReserva = lineasReserva;
 		this.cliente = cliente;
 		this.datosPago = datosPago;
+		this.hotel = hotel;
 	}
 
+
+	public Hotel getHotel() {
+		return hotel;
+	}
+
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
+	}
 
 	public long getId() {
 		return id;
@@ -142,12 +157,13 @@ public class Reserva implements Serializable {
 	@Override
 	public String toString() {
 		return "Reserva [id=" + id + ", fechaEntrada=" + fechaEntrada + ", fechaSalida=" + fechaSalida
-				+ ", lineasReserva=" + lineasReserva + ", cliente=" + cliente + ", datosPago=" + datosPago + "]";
+				+ ", lineasReserva=" + lineasReserva + ", cliente=" + cliente + ", datosPago=" + datosPago + ", hotel="
+				+ hotel + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cliente, datosPago, fechaEntrada, fechaSalida, Long.valueOf(id), lineasReserva);
+		return Objects.hash(cliente, datosPago, fechaEntrada, fechaSalida, hotel, Long.valueOf(id), lineasReserva);
 	}
 
 	@Override
@@ -161,7 +177,10 @@ public class Reserva implements Serializable {
 		Reserva other = (Reserva) obj;
 		return Objects.equals(cliente, other.cliente) && Objects.equals(datosPago, other.datosPago)
 				&& Objects.equals(fechaEntrada, other.fechaEntrada) && Objects.equals(fechaSalida, other.fechaSalida)
-				&& id == other.id && Objects.equals(lineasReserva, other.lineasReserva);
+				&& Objects.equals(hotel, other.hotel) && id == other.id
+				&& Objects.equals(lineasReserva, other.lineasReserva);
 	}
+
+	
 
 }

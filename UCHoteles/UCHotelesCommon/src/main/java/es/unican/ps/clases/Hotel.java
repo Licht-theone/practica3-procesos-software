@@ -29,6 +29,9 @@ public class Hotel implements Serializable {
 	private Categoria categoria;
 	
 	@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Reserva> reservas = new ArrayList<Reserva>();
+	
+	@OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Habitacion> habitaciones = new ArrayList<Habitacion>();
 	
 	/**
@@ -114,13 +117,12 @@ public class Hotel implements Serializable {
 	@Override
 	public String toString() {
 		return "Hotel [id=" + id + ", nombre=" + nombre + ", localidad=" + localidad + ", direccion=" + direccion
-				+ ", categoria=" + categoria + ", habitaciones=" + habitaciones + "]";
+				+ ", categoria=" + categoria + ", reservas=" + reservas + ", habitaciones=" + habitaciones + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(categoria, direccion, habitaciones, Long.valueOf(id), localidad,
-				nombre);
+		return Objects.hash(categoria, direccion, habitaciones, Long.valueOf(id), localidad, nombre, reservas);
 	}
 
 	@Override
@@ -134,8 +136,19 @@ public class Hotel implements Serializable {
 		Hotel other = (Hotel) obj;
 		return categoria == other.categoria && Objects.equals(direccion, other.direccion)
 				&& Objects.equals(habitaciones, other.habitaciones) && id == other.id
-				&& Objects.equals(localidad, other.localidad) && Objects.equals(nombre, other.nombre);
+				&& Objects.equals(localidad, other.localidad) && Objects.equals(nombre, other.nombre)
+				&& Objects.equals(reservas, other.reservas);
 	}
+
+	public List<Reserva> getReservas() {
+		return reservas;
+	}
+
+	public void setReservas(List<Reserva> reservas) {
+		this.reservas = reservas;
+	}
+
+	
 	
 	
 }
