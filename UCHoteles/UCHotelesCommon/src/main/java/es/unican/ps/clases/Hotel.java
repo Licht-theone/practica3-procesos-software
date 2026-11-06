@@ -148,7 +148,4 @@ public class Hotel implements Serializable {
 		this.reservas = reservas;
 	}
 
-	
-	
-	
 }

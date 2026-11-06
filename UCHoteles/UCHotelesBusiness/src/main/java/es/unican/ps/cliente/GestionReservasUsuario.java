@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-
 import es.unican.ps.clases.DatosCliente;
 import es.unican.ps.clases.DatosPago;
 import es.unican.ps.clases.Habitacion;
@@ -15,7 +14,9 @@ import es.unican.ps.enums.TipoHabitacion;
 import es.unican.ps.interfaces.IGestionReservasUsuario;
 import es.unican.ps.interfaces.IHotelDAO;
 import es.unican.ps.interfaces.IReservaDAO;
+import es.unican.ps.utils.GestorBloqueos;
 import jakarta.ejb.EJB;
+import jakarta.ejb.Remove;
 import jakarta.ejb.Stateful;
 
 @Stateful
@@ -26,6 +27,9 @@ public class GestionReservasUsuario implements IGestionReservasUsuario {
 	
 	@EJB
 	private IReservaDAO reservaDAO;
+	
+	@EJB
+	private GestorBloqueos gestorBloqueos;
 	
 	//atributos para el caso reserva que mantiene un estado
 	private Hotel seleccionado;
@@ -49,7 +53,7 @@ public class GestionReservasUsuario implements IGestionReservasUsuario {
 	@Override
 	public Reserva consultarReserva(long id, String dni) {
 		Reserva r = reservaDAO.verReserva(id);
-		if (r.getCliente().getDni() != dni) {
+		if (r == null || !r.getCliente().getDni().equals(dni)) {
 			return null;
 		}
 		return r;
@@ -63,7 +67,7 @@ public class GestionReservasUsuario implements IGestionReservasUsuario {
 			return null;
 		}
 		long diasParaEntrada = ChronoUnit.DAYS.between(LocalDate.now(), entrada);
-		if (diasParaEntrada < 2) {
+		if (diasParaEntrada >= 2) {
 			return reservaDAO.borrarReserva(id);
 		}
 		return null;
@@ -81,27 +85,91 @@ public class GestionReservasUsuario implements IGestionReservasUsuario {
  		}
 		List<Habitacion> disponibles = new ArrayList<>();
 		
-		return null;
+		for (Habitacion categoria: seleccionado.getHabitaciones()) {
+			int ocupadasBD = calcularOcupadasTipo(categoria.getTipo());
+			int ocupadasPorBloqueos = gestorBloqueos.consultarHabitacionesBloqueadas(categoria);
+			int libres = categoria.getDisponibles() - (ocupadasBD + ocupadasPorBloqueos);
+			
+			if (libres > 0) {
+				Habitacion disponible = new Habitacion(); //objeto para devolverlo en la lista
+				disponible.setTipo(categoria.getTipo());
+				disponible.setPrecioPorNoche(categoria.getPrecioPorNoche());
+				disponible.setDisponibles(libres);
+				disponibles.add(disponible);
+			}
+		}
+		return disponibles;
 	}
 
 	//Stateful
 	@Override
 	public boolean bloquearHabitaciones(long idHotel, TipoHabitacion tipo, int numHabitaciones) {
-		// TODO Auto-generated method stub
+		if (seleccionado == null) return false;
+		Habitacion hReal = null;
+		for (Habitacion h: seleccionado.getHabitaciones()) {
+			if (h.getTipo() == tipo) {
+				hReal = h;
+				break;
+			}
+		}
+		
+		if (hReal != null) {
+			ReservaTipoHabitacion linea = new ReservaTipoHabitacion();
+			linea.setHabitacion(hReal);
+			linea.setNumHabitaciones(numHabitaciones);
+			habitacionesBloqueadas.add(linea);
+			gestorBloqueos.registrarBloqueo(linea);
+			return true;
+		}
 		return false;
 	}
 
 	//Stateful
+	@Remove
 	@Override
 	public Reserva confirmarReserva(DatosCliente cliente, DatosPago pago) {
-		// TODO Auto-generated method stub
-		return null;
+		if (seleccionado == null || habitacionesBloqueadas.isEmpty()) {
+			return null;
+		}
+		Reserva reserva = new Reserva();
+		reserva.setHotel(seleccionado);
+		reserva.setFechaEntrada(entrada);
+		reserva.setFechaSalida(salida);
+		reserva.setCliente(cliente);
+		reserva.setDatosPago(pago);
+		
+		
+		for (ReservaTipoHabitacion linea: habitacionesBloqueadas) {
+			reserva.addLineaReserva(linea);
+		}
+		
+		reservaDAO.crearReserva(reserva);
+		
+		for (ReservaTipoHabitacion linea: habitacionesBloqueadas) {
+			gestorBloqueos.eliminaBloqueoManual(linea);
+		}
+		
+		return reserva;
 	}
 
 	//Stateful
 	@Override
 	public boolean liberarHabitaciones(long idHotel, TipoHabitacion tipo, int cantidad) {
-		// TODO Auto-generated method stub
+		ReservaTipoHabitacion lineaABorrar = null;
+		
+		for (ReservaTipoHabitacion linea: habitacionesBloqueadas) {
+			if (linea.getHabitacion().getTipo() == tipo && linea.getNumHabitaciones() == cantidad 
+					&& linea.getHabitacion().getHotel().getId() == idHotel) {
+				lineaABorrar = linea;
+				break;
+			}
+		}
+		
+		if (lineaABorrar != null) {
+			habitacionesBloqueadas.remove(lineaABorrar);
+			gestorBloqueos.eliminaBloqueoManual(lineaABorrar);
+			return true;
+		}
 		return false;
 	}
 	
