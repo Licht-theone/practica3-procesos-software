@@ -15,9 +15,9 @@ public interface IReservaDAO {
 	/**
 	 * Metodo que persiste una reserva a la bbdd
 	 * @param r el objeto reserva
-	 * @return true si se persiste false en caso contrario
+	 * @return la reserva persistida o null en caso contrario
 	 */
-	public boolean crearReserva(Reserva r);
+	public Reserva crearReserva(Reserva r);
 	
 	/**
 	 * Metodo que recupera una reserva de la bbdd

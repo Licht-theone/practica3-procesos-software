@@ -16,12 +16,13 @@ public class HotelDAO implements IHotelDAO {
 	private EntityManager em;
 
 	@Override
-	public boolean crearHotel(Hotel h) {
+	public Hotel crearHotel(Hotel h) {
 		try {
 			em.persist(h);
-			return true;
+			em.flush();
+	        return h;
 		} catch (Exception e) {
-			return false;
+			return null;
 		}
 	}
 

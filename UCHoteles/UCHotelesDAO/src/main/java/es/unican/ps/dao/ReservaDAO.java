@@ -16,12 +16,13 @@ public class ReservaDAO implements IReservaDAO {
 	private EntityManager em;
 
 	@Override
-	public boolean crearReserva(Reserva r) {
+	public Reserva crearReserva(Reserva r) {
 		try {
             em.persist(r);
-            return true;
+            em.flush();
+            return r;
         } catch (Exception e) {
-            return false;
+            return null;
         }
 	}
 

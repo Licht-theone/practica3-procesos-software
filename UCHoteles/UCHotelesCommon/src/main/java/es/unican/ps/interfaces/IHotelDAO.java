@@ -15,9 +15,9 @@ public interface IHotelDAO {
 	/**
 	 * Metodo que persiste un objeto hotel a la bbdd
 	 * @param h el objeto hotel
-	 * @return true si se persiste, false en caso contrario
+	 * @return El hotel persistido o null en caso contrario
 	 */
-	public boolean crearHotel(Hotel h);
+	public Hotel crearHotel(Hotel h);
 	
 	/**
 	 * Metodo que recupera un hotel de la bbdd con el nombre

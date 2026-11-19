@@ -1,6 +1,8 @@
 package es.unican.ps.dao;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
@@ -32,9 +34,9 @@ public class HotelDAOTest {
 		Hotel hotel = new Hotel();
 		hotel.setNombre("Bahia");
 		
-		boolean resultado = sut.crearHotel(hotel);
+		Hotel resultado = sut.crearHotel(hotel);
 		
-		assertTrue(resultado, "Deberia haberse creado el hotel");
+		assertEquals(hotel, resultado);
 		verify(emMock, times(1)).persist(hotel);
 	}
 	
@@ -42,8 +44,8 @@ public class HotelDAOTest {
 	public void testCrearHotel_PU02() {
 		Hotel h = new Hotel();
 		doThrow(new PersistenceException()).when(emMock).persist(h);
-		boolean resultado = sut.crearHotel(h);
-		assertFalse(resultado, "Deberia devolver false al no poder persistir");
+		Hotel resultado = sut.crearHotel(h);
+		assertNull(resultado);
 		verify(emMock, times(1)).persist(h);
 	}
 	
@@ -55,9 +57,9 @@ public class HotelDAOTest {
         doThrow(new EntityExistsException())
             .when(emMock).persist(hotel);
 
-        boolean resultado = sut.crearHotel(hotel);
+        Hotel resultado = sut.crearHotel(hotel);
 
-        assertFalse(resultado, "Debería devolver false al capturar EntityExistsException");
+        assertNull(resultado);
         
         verify(emMock, times(1)).persist(hotel);
 		
@@ -70,9 +72,9 @@ public class HotelDAOTest {
         doThrow(new IllegalArgumentException("No se puede persistir un objeto null"))
             .when(emMock).persist(hotelNulo);
 
-        boolean resultado = sut.crearHotel(hotelNulo);
+        Hotel resultado = sut.crearHotel(hotelNulo);
 
-        assertFalse(resultado, "Debería devolver false al capturar IllegalArgumentException");
+        assertNull(resultado);
 
         verify(emMock, times(1)).persist(hotelNulo);
 	}

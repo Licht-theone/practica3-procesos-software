@@ -77,12 +77,12 @@ public class ReservaTipoHabitacion implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "ReservaTipoHabitacion [id=" + id + ", reserva=" + reserva + ", numHabitaciones=" + numHabitaciones
+		return "ReservaTipoHabitacion [id=" + id + ", numHabitaciones=" + numHabitaciones
 				+ ", habitacion=" + habitacion + "]";
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(habitacion, Long.valueOf(id), Integer.valueOf(numHabitaciones), reserva);
+		return Objects.hash(habitacion, Long.valueOf(id), Integer.valueOf(numHabitaciones));
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -94,7 +94,7 @@ public class ReservaTipoHabitacion implements Serializable{
 			return false;
 		ReservaTipoHabitacion other = (ReservaTipoHabitacion) obj;
 		return Objects.equals(habitacion, other.habitacion) && id == other.id
-				&& numHabitaciones == other.numHabitaciones && Objects.equals(reserva, other.reserva);
+				&& numHabitaciones == other.numHabitaciones;
 	}
 	
 	

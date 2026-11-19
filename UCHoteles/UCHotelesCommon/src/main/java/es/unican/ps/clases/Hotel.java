@@ -117,12 +117,12 @@ public class Hotel implements Serializable {
 	@Override
 	public String toString() {
 		return "Hotel [id=" + id + ", nombre=" + nombre + ", localidad=" + localidad + ", direccion=" + direccion
-				+ ", categoria=" + categoria + ", reservas=" + reservas + ", habitaciones=" + habitaciones + "]";
+				+ ", categoria=" + categoria + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(categoria, direccion, habitaciones, Long.valueOf(id), localidad, nombre, reservas);
+		return Objects.hash(categoria, direccion, Long.valueOf(id), localidad, nombre);
 	}
 
 	@Override
@@ -134,10 +134,8 @@ public class Hotel implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Hotel other = (Hotel) obj;
-		return categoria == other.categoria && Objects.equals(direccion, other.direccion)
-				&& Objects.equals(habitaciones, other.habitaciones) && id == other.id
-				&& Objects.equals(localidad, other.localidad) && Objects.equals(nombre, other.nombre)
-				&& Objects.equals(reservas, other.reservas);
+		return categoria == other.categoria && Objects.equals(direccion, other.direccion) && id == other.id
+				&& Objects.equals(localidad, other.localidad) && Objects.equals(nombre, other.nombre);
 	}
 
 	public List<Reserva> getReservas() {

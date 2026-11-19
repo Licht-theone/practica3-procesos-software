@@ -17,6 +17,10 @@ public class DatosCliente implements Serializable {
 	private String segundoApellido;
 	private String email;
 	
+	public DatosCliente() {
+		
+	}
+	
 	/**
 	 * Constructor de la clase
 	 * @param dni dni del cliente 

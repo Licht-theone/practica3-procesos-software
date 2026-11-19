@@ -53,8 +53,8 @@ public class GestionReservasUsuario implements IGestionReservasUsuario {
 	@Override
 	public Reserva consultarReserva(long id, String dni) {
 		Reserva r = reservaDAO.verReserva(id);
-		if (r == null || dni == null ||!r.getCliente().getDni().equals(dni)) {
-			return null;
+		if (r == null || dni == null || r.getCliente() == null || !dni.equals(r.getCliente().getDni())) {
+		    return null;
 		}
 		return r;
 	}
@@ -143,13 +143,13 @@ public class GestionReservasUsuario implements IGestionReservasUsuario {
 			reserva.addLineaReserva(linea);
 		}
 		
-		reservaDAO.crearReserva(reserva);
+		Reserva persistida = reservaDAO.crearReserva(reserva);
 		
 		for (ReservaTipoHabitacion linea: habitacionesBloqueadas) {
 			gestorBloqueos.eliminaBloqueoManual(linea);
 		}
 		
-		return reserva;
+		return persistida;
 	}
 
 	/**

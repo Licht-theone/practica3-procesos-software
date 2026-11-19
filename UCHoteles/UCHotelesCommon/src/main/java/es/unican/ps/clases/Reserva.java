@@ -147,7 +147,7 @@ public class Reserva implements Serializable {
 	
 	private double calcularImporte() {
 		double total = 0;
-		long noches = ChronoUnit.DAYS.between(fechaEntrada, fechaSalida) - 1; //las noches son los dias - 1
+		long noches = ChronoUnit.DAYS.between(fechaEntrada, fechaSalida);
 		for (ReservaTipoHabitacion res: lineasReserva) {
 			total += res.getNumHabitaciones() * (noches * res.getHabitacion().getPrecioPorNoche());
 		}
@@ -157,13 +157,13 @@ public class Reserva implements Serializable {
 	@Override
 	public String toString() {
 		return "Reserva [id=" + id + ", fechaEntrada=" + fechaEntrada + ", fechaSalida=" + fechaSalida
-				+ ", lineasReserva=" + lineasReserva + ", cliente=" + cliente + ", datosPago=" + datosPago + ", hotel="
+				+ ", cliente=" + cliente + ", datosPago=" + datosPago + ", hotel="
 				+ hotel + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cliente, datosPago, fechaEntrada, fechaSalida, hotel, Long.valueOf(id), lineasReserva);
+		return Objects.hash(cliente, datosPago, fechaEntrada, fechaSalida, hotel, Long.valueOf(id));
 	}
 
 	@Override
@@ -177,8 +177,7 @@ public class Reserva implements Serializable {
 		Reserva other = (Reserva) obj;
 		return Objects.equals(cliente, other.cliente) && Objects.equals(datosPago, other.datosPago)
 				&& Objects.equals(fechaEntrada, other.fechaEntrada) && Objects.equals(fechaSalida, other.fechaSalida)
-				&& Objects.equals(hotel, other.hotel) && id == other.id
-				&& Objects.equals(lineasReserva, other.lineasReserva);
+				&& Objects.equals(hotel, other.hotel) && id == other.id;
 	}
 
 }

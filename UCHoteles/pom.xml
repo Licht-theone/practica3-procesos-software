@@ -27,5 +27,6 @@
   	<module>UCHotelesDAO</module>
   	<module>UCHotelesBusiness</module>
   	<module>UCHotelesWeb</module>
+  	<module>UCHotelesBusinessIT</module>
   </modules>
 </project>

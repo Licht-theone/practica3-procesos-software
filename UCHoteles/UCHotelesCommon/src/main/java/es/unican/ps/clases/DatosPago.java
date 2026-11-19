@@ -18,6 +18,10 @@ public class DatosPago implements Serializable {
 	private int anhoCaducidad;
 	private TipoTarjeta tipo;
 	
+	public DatosPago( ) {
+		
+	}
+	
 	/**
 	 * Constructor de la clase
 	 * @param numTarjeta numero de la tarjeta en formato texto
