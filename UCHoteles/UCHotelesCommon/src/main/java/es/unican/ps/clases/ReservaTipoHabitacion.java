@@ -22,13 +22,13 @@ public class ReservaTipoHabitacion implements Serializable{
 	private long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "reserva_id")
+	@JoinColumn(name = "reserva_fk")
 	private Reserva reserva;
 	
 	private int numHabitaciones;
 	
 	@ManyToOne
-	@JoinColumn(name = "habitacion_id")
+	@JoinColumn(name = "habitacion_fk")
 	private Habitacion habitacion;
 	
 	/**

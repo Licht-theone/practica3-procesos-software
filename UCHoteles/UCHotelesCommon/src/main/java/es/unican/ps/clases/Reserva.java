@@ -43,7 +43,7 @@ public class Reserva implements Serializable {
 	private DatosPago datosPago;
 	
 	@ManyToOne
-	@JoinColumn(name = "hotel_id")
+	@JoinColumn(name = "hotel_fk")
 	private Hotel hotel;
 	
 	/**

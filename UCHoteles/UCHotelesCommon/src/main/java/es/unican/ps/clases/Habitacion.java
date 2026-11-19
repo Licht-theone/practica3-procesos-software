@@ -25,7 +25,7 @@ public class Habitacion implements Serializable {
 	private long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "hotel_id")
+	@JoinColumn(name = "hotel_fk")
 	private Hotel hotel;
 	
 	private int disponibles;
