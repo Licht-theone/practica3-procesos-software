@@ -10,12 +10,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
  * Clase que almacena los detalles de una habitacion de un hotel
  * @author aaron
  */
 @Entity
+@Table(name = "habitaciones")
 public class Habitacion implements Serializable {
 	
 	@Id
