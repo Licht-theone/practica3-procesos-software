@@ -9,12 +9,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
  * Clase intermedia que almacena el numero de habitaciones por tipo de habitacion de una reserva
  * @author aaron
  */
 @Entity
+@Table(name = "lineasReservas")
 public class ReservaTipoHabitacion implements Serializable{
 	
 	@Id

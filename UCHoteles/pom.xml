@@ -28,5 +28,6 @@
   	<module>UCHotelesBusiness</module>
   	<module>UCHotelesWeb</module>
   	<module>UCHotelesBusinessIT</module>
+  	<module>UCHotelesEAR</module>
   </modules>
 </project>

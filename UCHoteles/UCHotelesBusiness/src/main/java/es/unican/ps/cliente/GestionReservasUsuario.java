@@ -15,11 +15,15 @@ import es.unican.ps.interfaces.IGestionReservasUsuario;
 import es.unican.ps.interfaces.IHotelDAO;
 import es.unican.ps.interfaces.IReservaDAO;
 import es.unican.ps.utils.GestorBloqueos;
+import jakarta.annotation.security.DeclareRoles;
+import jakarta.annotation.security.PermitAll;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Remove;
 import jakarta.ejb.Stateful;
 
 @Stateful
+@DeclareRoles({"GERENTE"})
+@PermitAll
 public class GestionReservasUsuario implements IGestionReservasUsuario {
 
 	@EJB

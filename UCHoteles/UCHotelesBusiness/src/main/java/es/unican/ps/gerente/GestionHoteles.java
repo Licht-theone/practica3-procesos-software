@@ -5,10 +5,14 @@ import es.unican.ps.clases.Hotel;
 import es.unican.ps.enums.TipoHabitacion;
 import es.unican.ps.interfaces.IGestionHoteles;
 import es.unican.ps.interfaces.IHotelDAO;
+import jakarta.annotation.security.DeclareRoles;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 
 @Stateless
+@DeclareRoles({"GERENTE"})
+@RolesAllowed("GERENTE")
 public class GestionHoteles implements IGestionHoteles {
 
 	@EJB

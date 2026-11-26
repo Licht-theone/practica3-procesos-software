@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="pageTitle">Disponibilidad de habitaciones</ui:define>
+    <ui:define name="title">Disponibilidad de habitaciones</ui:define>
+
+    <ui:define name="content">
+        <p>
+            <strong>Hotel:</strong> <h:outputText value="#{reservaBean.hotelSeleccionado.nombre}" />
+            &#160;|&#160;
+            <strong>Entrada:</strong> <h:outputText value="#{reservaBean.fechaEntrada}" />
+            &#160;|&#160;
+            <strong>Salida:</strong> <h:outputText value="#{reservaBean.fechaSalida}" />
+        </p>
+
+        <h:form id="disponibilidadForm">
+            <h:messages globalOnly="true" styleClass="error-msg" />
+
+            <h:dataTable id="tablaHabitaciones" value="#{reservaBean.habitacionesDisponibles}" var="item"
+                         styleClass="data-table">
+                <h:column>
+                    <f:facet name="header">Tipo Habitación</f:facet>
+                    <h:outputText value="#{item.habitacion.tipo}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Disponibles</f:facet>
+                    <h:outputText value="#{item.habitacion.disponibles}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Precio por noche (€)</f:facet>
+                    <h:outputText value="#{item.habitacion.precioPorNoche}">
+                        <f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Número de habitaciones</f:facet>
+                    <h:inputText id="numHabitaciones" value="#{item.numSeleccionadas}" size="5"
+                                 converterMessage="Debe introducir un número entero">
+                        <f:validateLongRange minimum="0" />
+                    </h:inputText>
+                    <h:message for="numHabitaciones" styleClass="error-msg" />
+                </h:column>
+            </h:dataTable>
+
+            <div class="actions">
+                <h:commandButton id="btnReservar" value="Reservar" action="#{reservaBean.reservarHabitaciones}" />
+                <h:button id="btnVolver" value="Volver" outcome="listaHoteles.xhtml" />
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="pageTitle">Datos Reserva</ui:define>
+    <ui:define name="title">Datos Reserva</ui:define>
+
+    <ui:define name="content">
+        <p>
+            <strong>Hotel:</strong> <h:outputText value="#{reservaBean.hotelSeleccionado.nombre}" />
+            &#160;|&#160;
+            <strong>Entrada:</strong> <h:outputText value="#{reservaBean.fechaEntrada}" />
+            &#160;|&#160;
+            <strong>Salida:</strong> <h:outputText value="#{reservaBean.fechaSalida}" />
+        </p>
+        <p>
+            <strong>Importe total de la reserva:</strong>
+            <h:outputText id="importeTotal" value="#{reservaBean.importeTotal}">
+                <f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
+            </h:outputText> €
+        </p>
+        <p><em>Las habitaciones seleccionadas han quedado bloqueadas durante 10 minutos.</em></p>
+
+        <h:form id="datosReservaForm">
+            <h:messages globalOnly="true" styleClass="error-msg" />
+
+            <h2>Datos del Cliente</h2>
+            <h:panelGrid columns="3" styleClass="form-grid">
+                <h:outputLabel for="nombre" value="Nombre:" />
+                <h:inputText id="nombre" value="#{reservaBean.cliente.nombre}"
+                             required="true" requiredMessage="El nombre es obligatorio" size="30" />
+                <h:message for="nombre" styleClass="error-msg" />
+
+                <h:outputLabel for="primerApellido" value="Primer Apellido:" />
+                <h:inputText id="primerApellido" value="#{reservaBean.cliente.primerApellido}"
+                             required="true" requiredMessage="El primer apellido es obligatorio" size="30" />
+                <h:message for="primerApellido" styleClass="error-msg" />
+
+                <h:outputLabel for="segundoApellido" value="Segundo Apellido:" />
+                <h:inputText id="segundoApellido" value="#{reservaBean.cliente.segundoApellido}" size="30" />
+                <h:message for="segundoApellido" styleClass="error-msg" />
+
+                <h:outputLabel for="dni" value="DNI:" />
+                <h:inputText id="dni" value="#{reservaBean.cliente.dni}"
+                             required="true" requiredMessage="El DNI es obligatorio" size="15" />
+                <h:message for="dni" styleClass="error-msg" />
+
+                <h:outputLabel for="email" value="Email:" />
+                <h:inputText id="email" value="#{reservaBean.cliente.email}"
+                             required="true" requiredMessage="El email es obligatorio" size="30" />
+                <h:message for="email" styleClass="error-msg" />
+            </h:panelGrid>
+
+            <h2>Datos de Pago</h2>
+            <h:panelGrid columns="3" styleClass="form-grid">
+                <h:outputLabel for="tipoTarjeta" value="Tipo de Tarjeta:" />
+                <h:selectOneMenu id="tipoTarjeta" value="#{reservaBean.pago.tipo}" required="true">
+                    <f:selectItems value="#{reservaBean.tiposTarjeta}" />
+                </h:selectOneMenu>
+                <h:message for="tipoTarjeta" styleClass="error-msg" />
+
+                <h:outputLabel for="numTarjeta" value="Número de Tarjeta:" />
+                <h:inputText id="numTarjeta" value="#{reservaBean.pago.numTarjeta}"
+                             required="true" requiredMessage="El número de tarjeta es obligatorio" size="22" />
+                <h:message for="numTarjeta" styleClass="error-msg" />
+
+                <h:outputLabel for="cvc" value="CVC:" />
+                <h:inputText id="cvc" value="#{reservaBean.pago.cvc}"
+                             required="true" requiredMessage="El CVC es obligatorio" size="5" maxlength="4" />
+                <h:message for="cvc" styleClass="error-msg" />
+
+                <h:outputLabel for="mesCaducidad" value="Mes de Caducidad (1-12):" />
+                <h:inputText id="mesCaducidad" value="#{reservaBean.pago.mesCaducidad}"
+                             required="true" requiredMessage="El mes de caducidad es obligatorio" size="5">
+                    <f:validateLongRange minimum="1" maximum="12" />
+                </h:inputText>
+                <h:message for="mesCaducidad" styleClass="error-msg" />
+
+                <h:outputLabel for="anhoCaducidad" value="Año de Caducidad:" />
+                <h:inputText id="anhoCaducidad" value="#{reservaBean.pago.anhoCaducidad}"
+                             required="true" requiredMessage="El año de caducidad es obligatorio" size="6">
+                    <f:validateLongRange minimum="2024" maximum="2050" />
+                </h:inputText>
+                <h:message for="anhoCaducidad" styleClass="error-msg" />
+            </h:panelGrid>
+
+            <div class="actions">
+                <h:commandButton id="btnConfirmar" value="Enviar / Confirmar Reserva"
+                                 action="#{reservaBean.confirmarReserva}" />
+                <h:commandButton id="btnCancelar" value="Cancelar"
+                                 action="#{reservaBean.cancelarProcesoReserva}" immediate="true" />
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

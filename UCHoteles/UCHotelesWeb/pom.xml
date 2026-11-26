@@ -7,4 +7,22 @@
   </parent>
   <artifactId>UCHotelesWeb</artifactId>
   <packaging>war</packaging>
+  <dependencies>
+    <dependency>
+      <groupId>es.unican.ps</groupId>
+      <artifactId>UCHotelesCommon</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.platform</groupId>
+      <artifactId>jakarta.jakartaee-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.platform</groupId>
+      <artifactId>jakarta.jakartaee-web-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 </project>
