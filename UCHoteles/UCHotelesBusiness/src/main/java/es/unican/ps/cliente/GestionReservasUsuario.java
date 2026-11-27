@@ -80,10 +80,13 @@ public class GestionReservasUsuario implements IGestionReservasUsuario {
 	//Stateful
 	@Override
 	public List<Habitacion> consultarDisponibilidad(long idHotel, LocalDate fechaEntrada, LocalDate fechaSalida) {
+		for (ReservaTipoHabitacion linea : habitacionesBloqueadas) {
+			gestorBloqueos.eliminaBloqueoManual(linea);
+		}
+		this.habitacionesBloqueadas.clear();
 		this.seleccionado = hotelDAO.verHotelId(idHotel);
 		this.entrada = fechaEntrada;
 		this.salida = fechaSalida;
-		this.habitacionesBloqueadas.clear();
 		if (seleccionado == null) {
 			return new ArrayList<>();
  		}
@@ -188,7 +191,7 @@ public class GestionReservasUsuario implements IGestionReservasUsuario {
 			gestorBloqueos.eliminaBloqueoManual(lineaABorrar);
 			return true;
 		}
-		return false;
+		return gestorBloqueos.eliminaBloqueo(idHotel, tipo, cantidad);
 	}
 	
 	/**

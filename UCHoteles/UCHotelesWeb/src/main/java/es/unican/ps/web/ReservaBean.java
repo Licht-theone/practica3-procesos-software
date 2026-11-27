@@ -281,8 +281,9 @@ public class ReservaBean implements Serializable {
                             hotelSeleccionado.getId(),
                             item.getHabitacion().getTipo(),
                             item.getNumSeleccionadas());
-                } catch (Exception ignored) {
-                    // Ignorar si ya fue liberado
+                } catch (Exception e) {
+                    java.util.logging.Logger.getLogger(ReservaBean.class.getName())
+                            .log(java.util.logging.Level.WARNING, "Error liberando habitaciones bloqueadas", e);
                 }
             }
             habitacionesBloqueadas.clear();
